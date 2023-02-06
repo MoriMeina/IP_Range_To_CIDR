@@ -1,4 +1,6 @@
 import sys
+
+import catch as catch
 from cidrize import cidrize
 
 
@@ -29,38 +31,53 @@ def read(input_file):
 
 
 def ip2cidr(lines):
-    # 从文件中读取IP地址并转换为CIDR
-    cidrs = []
+# 从文件中读取IP地址并转换为CIDR
+    cidra = []
     for line in lines:
-        cidrs.append(cidrize(line))
-    return cidrs
+        trans = cidrize(line)
+        with open(output_file, 'a') as f:
+            cidrlist = ("\n".join('%s' % id for id in trans))
+            cidrbf = cidrlist.replace(",", "\n")
+            cidr1 = cidrbf.replace("[", "")
+            cidr2 = cidr1.replace("]", "")
+            cidr3 = cidr2.replace("(", "")
+            cidr4 = cidr3.replace(")", "")
+            cidr5 = cidr4.replace("'", "")
+            cidr6 = cidr5.replace("IPNetwork", "")
+            cidr_n = cidr6.replace(" ", "")
+            f.writelines(str(cidr_n) + '\n')
+        print(cidr_n)
+        cidra.append(cidr_n)
 
+#        print(trans)
 
-def write(output_file, cidrs):
-    # 将CIDR写入文件
-    with open(output_file, 'w') as f:
-        cidrlist = ("\n".join('%s' %id for id in cidrs))
-        cidrbf = cidrlist.replace(",", "\n")
-        cidr1 = cidrbf.replace("[", "")
-        cidr2 = cidr1.replace("]", "")
-        cidr3 = cidr2.replace("(", "")
-        cidr4 = cidr3.replace(")", "")
-        cidr5 = cidr4.replace("'", "")
-        cidr6 = cidr5.replace("IPNetwork", "")
-        cidr = cidr6.replace(" ", "")
+    return cidra
 
-        print(cidr)
-        if cidrs == '':
-            return 0
-        else:
-            f.write(str(cidr))
-            return 1
+# def write(output_file, fcidra):
+#     # 将CIDR写入文件
+#     with open(output_file, 'w') as f:
+#         cidrlist = ("\n".join('%s' %id for id in fcidra))
+#         cidrbf = cidrlist.replace(",", "\n")
+#         cidr1 = cidrbf.replace("[", "")
+#         cidr2 = cidr1.replace("]", "")
+#         cidr3 = cidr2.replace("(", "")
+#         cidr4 = cidr3.replace(")", "")
+#         cidr5 = cidr4.replace("'", "")
+#         cidr6 = cidr5.replace("IPNetwork", "")
+#         cidr_n = cidr6.replace(" ", "")
+#
+#         print(cidr_n)
+#         if cidr_n == '':
+#             return 0
+#         else:
+#             f.write(str(cidr_n))
+#             return 1
 
 
 def main():
     lines = read(input_file)
-    fcidrs = ip2cidr(lines)
-    write(output_file, fcidrs)
+    ip2cidr(lines)
+    # write(output_file, fcidra)
 
 
 if __name__ == '__main__':
