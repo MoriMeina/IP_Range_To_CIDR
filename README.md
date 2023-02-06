@@ -16,4 +16,4 @@ clone the repo
 ============
 cmd/sh:
 ---
-  python3 main.py [ur input file dir] [ur output file dir]
+  python main.py [ur input file dir] [ur output file dir]
