@@ -1,6 +1,4 @@
 import sys
-
-import catch as catch
 from cidrize import cidrize
 
 
